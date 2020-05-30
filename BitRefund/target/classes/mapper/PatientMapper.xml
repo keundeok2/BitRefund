@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PatientMapper">
+
+<resultMap type="patient" id="patientSelectMap">
+		<result property="patientNo" column="patient_no" jdbcType="NUMERIC"/>
+ 		<result property="patientName" column="patient_name" jdbcType="VARCHAR"/>
+		<result property="age" column="age" jdbcType="NUMERIC"/>
+ 		<result property="sex" column="sex" jdbcType="CHAR"/>
+ 		<result property="phone" column="phone" jdbcType="VARCHAR"/>
+</resultMap>
+
+<select id="selectPatient" resultMap="patientSelectMap">
+
+	select * from patient;
+	
+</select>
+
+
+</mapper>
