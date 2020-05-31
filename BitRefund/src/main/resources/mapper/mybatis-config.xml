@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+ 		 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<!-- Domain Alias -->
+	<typeAliases>
+		<typeAlias alias="patient" type="com.bitrefund.domain.Patient" />
+		<typeAlias alias="acceptance" type="com.bitrefund.domain.Acceptance" />
+		<typeAlias alias="refund" type="com.bitrefund.domain.Refund" />
+		<typeAlias alias="search" type="com.bitrefund.domain.Search" />
+	</typeAliases>
+
+</configuration>

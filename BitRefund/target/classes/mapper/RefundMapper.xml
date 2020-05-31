@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RefundMapper">
+	<resultMap type="refund" id="refundSelectMap">
+		<result property="refundNo" column="refund_no" jdbcType="NUMERIC"/>
+		<result property="acceptanceNo" column="acceptance_no" jdbcType="NUMERIC"/>
+		<result property="refundDate" column="refund_date" jdbcType="DATE"/>
+		<result property="cash" column="cash" jdbcType="NUMERIC"/>
+		<result property="card" column="card" jdbcType="NUMERIC"/>
+		<result property="bankTransfer" column="bank_transfer" jdbcType="NUMERIC"/>
+		<result property="card" column="card" jdbcType="NUMERIC"/>
+		<result property="totalRefundAmount" column="total_refund_amount" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	
+	<insert id="addRefund" parameterType="refund">
+		INSERT INTO refund
+		VALUES (NEXT VALUE FOR seq_refund_refund_no, #{acceptanceNo}, getdate(), #{cash}, #{card}, #{bankTransfer}, #{totalRefundAmount})
+	</insert>
+	
+	<select id="getAllRefundByAcceptanceNo" parameterType="int" resultMap="refundSelectMap">
+		SELECT *
+		FROM refund
+		WHERE acceptance_no = #{value}
+	</select>
+</mapper>

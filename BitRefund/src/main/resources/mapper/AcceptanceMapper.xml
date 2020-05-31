@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AcceptanceMapper">
+
+<resultMap type="acceptance" id="acceptanceSelectMap">
+	<result property="acceptanceNo" column="acceptance_no" jdbcType="NUMERIC"/>
+	<result property="acceptanceDate" column="acceptance_date" jdbcType="DATE"/>
+	<result property="patientNo" column="patient_no" jdbcType="NUMERIC"/>
+	<result property="totalPrice" column="total_price" jdbcType="NUMERIC"/>
+	<result property="copay" column="copay" jdbcType="NUMERIC"/>
+	<result property="acceptanceAmount" column="acceptance_amount" jdbcType="NUMERIC"/>
+	<result property="refundAmount" column="refund_amount" jdbcType="NUMERIC"/>
+</resultMap>
+
+
+<insert id="addAcceptance" parameterType="acceptance">
+	INSERT INTO acceptance
+	VALUES (NEXT VALUE FOR seq_acceptance_acceptance_no, getdate(), #{patientNo}, #{totalPrice}, #{totalPrice}/3, #{acceptanceAmount}, 0);
+
+</insert>
+
+<select id="getAllAcceptanceByPatientNo" parameterType="int" resultMap="acceptanceSelectMap">
+	select *
+	from acceptance
+	<where>
+		patient_no = #{value}
+	</where>
+	order by acceptance_date desc
+</select>
+
+<update id="updateRefundAmount" parameterType="map">
+	UPDATE acceptance
+	SET refund_amount = #{refundAmount}
+	WHERE acceptance_no = #{acceptanceNo}
+</update>
+
+
+</mapper>

@@ -4,9 +4,11 @@
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
 	<!-- Annotation Scan -->
@@ -23,20 +25,10 @@
         <property name="password" value="${jdbc.password}"></property>
     </bean>
 	
-	<!--  Mybagis SqlSessionFactory Bean -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
-        <property name="dataSource" ref="dataSource"></property>
-        <property name="configLocation" value="classpath:config/mybatis-context.xml"></property>
-        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"></property>
-    </bean> 
-     
-     <!-- Mybatis SqlSession Bean -->
-     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
-        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
-     </bean>
-     
     <!-- DataSource Transaction -->
      <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
      </bean>
+     
+     <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

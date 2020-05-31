@@ -3,27 +3,26 @@ package com.bitrefund.domain;
 public class Patient {
 
 	private int patientNo;
-	private String patientName;
-	private int age;
+	private String name;
+	private String socialId;
 	private String sex;
-	private String phone;
 	public int getPatientNo() {
 		return patientNo;
 	}
 	public void setPatientNo(int patientNo) {
 		this.patientNo = patientNo;
 	}
-	public String getPatientName() {
-		return patientName;
+	public String getName() {
+		return name;
 	}
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public int getAge() {
-		return age;
+	public String getSocialId() {
+		return socialId;
 	}
-	public void setAge(int age) {
-		this.age = age;
+	public void setSocialId(String socialId) {
+		this.socialId = socialId;
 	}
 	public String getSex() {
 		return sex;
@@ -31,17 +30,11 @@ public class Patient {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	@Override
 	public String toString() {
-		return "Patient [patientNo=" + patientNo + ", patientName=" + patientName + ", age=" + age + ", sex=" + sex
-				+ ", phone=" + phone + "]";
+		return "Patient [patientNo=" + patientNo + ", name=" + name + ", socialId=" + socialId + ", sex=" + sex + "]";
 	}
+
 	
 
 }
