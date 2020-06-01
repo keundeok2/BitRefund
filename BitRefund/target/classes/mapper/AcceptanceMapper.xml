@@ -18,17 +18,16 @@
 
 <insert id="addAcceptance" parameterType="acceptance">
 	INSERT INTO acceptance
-	VALUES (NEXT VALUE FOR seq_acceptance_acceptance_no, getdate(), #{patientNo}, #{totalPrice}, #{totalPrice}/3, #{acceptanceAmount}, 0);
-
+	VALUES (NEXT VALUE FOR seq_acceptance_acceptance_no, getdate(), #{patientNo}, #{totalPrice}, #{copay}, #{acceptanceAmount}, 0);
 </insert>
 
 <select id="getAllAcceptanceByPatientNo" parameterType="int" resultMap="acceptanceSelectMap">
-	select *
-	from acceptance
+	SELECT *
+	FROM acceptance
 	<where>
 		patient_no = #{value}
 	</where>
-	order by acceptance_date desc
+	ORDER BY acceptance_date DESC
 </select>
 
 <update id="updateRefundAmount" parameterType="map">

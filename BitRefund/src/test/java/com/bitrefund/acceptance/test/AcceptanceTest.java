@@ -22,13 +22,20 @@ public class AcceptanceTest {
 
 	private static Logger logger = LoggerFactory.getLogger(AcceptanceTest.class);
 
-//	@Test
+	@Test
 	public void addTest() {
 		Acceptance acceptance = new Acceptance();
 		acceptance.setAcceptanceAmount(20000);
 		acceptance.setTotalPrice(70000);
-		acceptance.setPatientNo(10001);
+		acceptance.setPatientNo(10000);
 
+		System.out.println(acceptanceService.addAcceptance(acceptance));
+		System.out.println(acceptanceService.addAcceptance(acceptance));
+		System.out.println(acceptanceService.addAcceptance(acceptance));
+		System.out.println(acceptanceService.addAcceptance(acceptance));
+		System.out.println(acceptanceService.addAcceptance(acceptance));
+		System.out.println(acceptanceService.addAcceptance(acceptance));
+		System.out.println(acceptanceService.addAcceptance(acceptance));
 		System.out.println(acceptanceService.addAcceptance(acceptance));
 
 	}
@@ -40,7 +47,7 @@ public class AcceptanceTest {
 		System.out.println(acceptanceService.getAllAcceptanceByPatientNo(patientNo));
 	}
 	
-	@Test
+//	@Test
 	public void updateRefundAmount() throws Exception{
 		
 		int acceptanceNo = 10001;
