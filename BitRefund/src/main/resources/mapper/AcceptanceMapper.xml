@@ -15,7 +15,6 @@
 	<result property="refundAmount" column="refund_amount" jdbcType="NUMERIC"/>
 </resultMap>
 
-
 <insert id="addAcceptance" parameterType="acceptance">
 	INSERT INTO acceptance
 	VALUES (NEXT VALUE FOR seq_acceptance_acceptance_no, getdate(), #{patientNo}, #{totalPrice}, #{copay}, #{acceptanceAmount}, 0);
@@ -27,12 +26,12 @@
 	<where>
 		patient_no = #{value}
 	</where>
-	ORDER BY acceptance_date DESC
+	ORDER BY acceptance_no DESC
 </select>
 
 <update id="updateRefundAmount" parameterType="map">
 	UPDATE acceptance
-	SET refund_amount = #{refundAmount}
+	SET refund_amount = refund_amount + #{refundAmount}
 	WHERE acceptance_no = #{acceptanceNo}
 </update>
 

@@ -17,14 +17,16 @@
 
 $(function() {
 	$("button#getAllPatient").on("click", function() {
-		$(location).attr("href", "/");
+		$(location).attr("href", "/patient/getAllPatient");
 	});
 	
 	
 	$("tr.info").on("click", function() {
 		var patientNo = $(this).attr("id");
 		//console.log("patientNo", patientNo);
-		$(location).attr("href", "/acceptance/getAllAcceptanceByPatientNo/"+patientNo);
+		//$(location).attr("href", "/acceptance/getAllAcceptanceByPatientNo/"+patientNo);
+		opener.location.href="/acceptance/getAllAcceptanceByPatientNo/"+patientNo;
+		self.close();
 	});
 });
 </script>

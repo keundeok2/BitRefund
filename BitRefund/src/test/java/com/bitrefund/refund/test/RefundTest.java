@@ -22,7 +22,7 @@ public class RefundTest {
 	@Test
 	public void addRefund() throws Exception {
 		Refund refund = new Refund();
-		refund.setAcceptanceNo(10001);
+		refund.setAcceptanceNo(10038);
 		refund.setCard(10000);
 		refund.setBankTransfer(10000);
 		refund.setCash(3333);

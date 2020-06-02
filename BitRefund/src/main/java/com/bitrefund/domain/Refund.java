@@ -6,6 +6,7 @@ public class Refund {
 
 	private int refundNo;
 	private int acceptanceNo;
+	private int patientNo;
 	private Date refundDate;
 	private int cash;
 	private int card;
@@ -26,6 +27,14 @@ public class Refund {
 
 	public void setAcceptanceNo(int acceptanceNo) {
 		this.acceptanceNo = acceptanceNo;
+	}
+	
+	public int getPatientNo() {
+		return patientNo;
+	}
+	
+	public void setPatientNo(int patientNo) {
+		this.patientNo = patientNo;
 	}
 
 	public Date getRefundDate() {
@@ -70,10 +79,9 @@ public class Refund {
 
 	@Override
 	public String toString() {
-		return "Refund [refundNo=" + refundNo + ", acceptanceNo=" + acceptanceNo + ", refundDate=" + refundDate
-				+ ", cash=" + cash + ", card=" + card + ", bankTransfer=" + bankTransfer + ", totalRefundAmount="
-				+ totalRefundAmount + "]";
+		return "Refund [refundNo=" + refundNo + ", acceptanceNo=" + acceptanceNo + ", patientNo=" + patientNo
+				+ ", refundDate=" + refundDate + ", cash=" + cash + ", card=" + card + ", bankTransfer=" + bankTransfer
+				+ ", totalRefundAmount=" + totalRefundAmount + "]";
 	}
-
 	
 }

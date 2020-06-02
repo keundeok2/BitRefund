@@ -33,8 +33,10 @@ public class AcceptanceController {
 	public String getAllAcceptanceByPatientNo(@PathVariable int patientNo, Model model) {
 		List<Acceptance> list = acceptanceService.getAllAcceptanceByPatientNo(patientNo);
 		Patient patient = patientService.getPatient(patientNo);
+		
 		logger.info(list.toString());
 		logger.info(patient.toString());
+		
 		model.addAttribute("acceptanceList",list);
 		model.addAttribute("patient", patient);
 		return "main";

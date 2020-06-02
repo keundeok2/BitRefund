@@ -23,6 +23,6 @@ public class HomeController {
 	@RequestMapping("/")
 	public String index(Model model) {
 		
-		return "forward:/patient/getAllPatient";
+		return "main";
 	}
 }

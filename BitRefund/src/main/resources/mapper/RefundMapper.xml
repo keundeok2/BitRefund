@@ -17,12 +17,13 @@
 	
 	<insert id="addRefund" parameterType="refund">
 		INSERT INTO refund
-		VALUES (NEXT VALUE FOR seq_refund_refund_no, #{acceptanceNo}, getdate(), #{cash}, #{card}, #{bankTransfer}, #{totalRefundAmount})
+		VALUES (NEXT VALUE FOR seq_refund_refund_no, #{acceptanceNo},#{patientNo}, getdate(), #{cash}, #{card}, #{bankTransfer}, #{totalRefundAmount})
 	</insert>
 	
 	<select id="getAllRefundByAcceptanceNo" parameterType="int" resultMap="refundSelectMap">
 		SELECT *
 		FROM refund
 		WHERE acceptance_no = #{value}
+		ORDER BY refund_no DESC
 	</select>
 </mapper>
