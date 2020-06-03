@@ -15,9 +15,9 @@
 	</resultMap>
 	
 	
-	<insert id="addRefund" parameterType="refund">
-		INSERT INTO refund
-		VALUES (NEXT VALUE FOR seq_refund_refund_no, #{acceptanceNo},#{patientNo}, getdate(), #{cash}, #{card}, #{bankTransfer}, #{totalRefundAmount})
+	<insert id="addRefund" parameterType="refund" useGeneratedKeys="true" keyProperty="refundNo">
+		INSERT INTO refund (acceptance_no, patient_no, refund_date, cash, card, bank_transfer, total_refund_amount)
+		VALUES (#{acceptanceNo},#{patientNo}, getdate(), #{cash}, #{card}, #{bankTransfer}, #{totalRefundAmount})
 	</insert>
 	
 	<select id="getAllRefundByAcceptanceNo" parameterType="int" resultMap="refundSelectMap">

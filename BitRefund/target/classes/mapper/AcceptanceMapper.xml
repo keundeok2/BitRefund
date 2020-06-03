@@ -15,10 +15,16 @@
 	<result property="refundAmount" column="refund_amount" jdbcType="NUMERIC"/>
 </resultMap>
 
-<insert id="addAcceptance" parameterType="acceptance">
-	INSERT INTO acceptance
-	VALUES (NEXT VALUE FOR seq_acceptance_acceptance_no, getdate(), #{patientNo}, #{totalPrice}, #{copay}, #{acceptanceAmount}, 0);
+<insert id="addAcceptance" parameterType="acceptance" useGeneratedKeys="true" keyProperty="acceptanceNo">
+	INSERT INTO acceptance (acceptance_date, patient_no, total_price, copay, acceptance_amount, refund_amount)
+	VALUES (getdate(), #{patientNo}, #{totalPrice}, #{copay}, #{acceptanceAmount}, 0);
 </insert>
+
+<select id="getAcceptance" parameterType="int" resultMap="acceptanceSelectMap">
+SELECT *
+FROM acceptance
+WHERE acceptance_no = #{value}
+</select>
 
 <select id="getAllAcceptanceByPatientNo" parameterType="int" resultMap="acceptanceSelectMap">
 	SELECT *

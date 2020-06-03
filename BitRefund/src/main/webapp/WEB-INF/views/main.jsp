@@ -12,49 +12,14 @@
 <!-- Optional theme -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript">
+<script src="/resources/js/main.js"></script>
 
-$(function() {
-	$("#totalPrice, #cash, #card, #bankTransfer").keypress(function(e) {
-		if (e.keyCode > 57 || e.keyCode < 48) {
-				return false;
-		}
-	});
-	
-	$("#totalPrice").keyup(function(e) {
-		var tp = $(this).val();
-		var copay = tp/3
-		$("#copay").val(Math.round(copay));
-	});
-	
-	$("#cash, #card, #bankTransfer").keyup(function(e) {
-		var value =$(this).val();
-		if (value == null || value == "") {
-			value = 0;
-		}
-		var cash = $("#cash").val() == "" ? 0 : $("#cash").val();
-		var card = $("#card").val() == "" ? 0 : $("#card").val(); 
-		var bankTransfer = $("#bankTransfer").val() == "" ? 0 : $("#bankTransfer").val(); 
-		$("#totalRefundAmount").val(parseInt(card) + parseInt(cash) + parseInt(bankTransfer));
-	});
-	
-	
-	$("tr.acceptanceRow").on("click", function() {
-		var acceptanceNo = $(this).attr("id");
-		var patientNo = $("input#patientNo").val();
-		$(location).attr("href", "/refund/getAllRefundByAcceptanceNo/"+acceptanceNo+"/"+patientNo);
-	}); 
-	
-	$("button#patientList").on("click", function() {
-		window.open("/patient/getAllPatient","환자목록","width=550, height=400, left=400, top=100");
-	});
-	
-	
-});
-
-</script>
 <style type="text/css">
+.off {
+	display: none;
+}
 </style>
+
 </head>
 <body>
 <div class="container" style="margin-top:10px;">
@@ -72,7 +37,7 @@ $(function() {
       <th scope="col">환불액</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="acceptancetbody">
       <c:forEach items="${acceptanceList}" var="acceptance">
       	<tr id="${acceptance.acceptanceNo}" class="acceptanceRow">
       	 <td>${acceptance.acceptanceNo}</td>
@@ -98,24 +63,15 @@ $(function() {
       <th scope="col">총환불액</th>
     </tr>
   </thead>
-  <tbody>
-	<c:forEach items="${refundList}" var="refund">
-		<tr>
-			<td>${refund.refundDate}</td>
-			<td>${refund.cash}</td>
-			<td>${refund.card}</td>
-			<td>${refund.bankTransfer}</td>
-			<td>${refund.totalRefundAmount}</td>
-		</tr>
-	</c:forEach>
+  <tbody id="refundtbody">
   </tbody>
 </table>
 </div>
 </div>
 	<div class="col-sm-5">
 		<button class="btn btn-block btn-sm btn-info" id="patientList">환자검색 / 환자목록</button>
-		<hr/>
-		<form id="acceptanceForm" method="POST" action="/acceptance/addAcceptance">
+		<br/>
+		<form id="acceptanceForm">
 		<input type="hidden" id="patientNo" name="patientNo" value="${patient.patientNo}" >
 		  <div class="form-group row">
 		    <label for="name" class="col-sm-3 col-form-label">이름</label>
@@ -132,57 +88,102 @@ $(function() {
 		  <div class="form-group row">
 		    <label for="totalPrice" class="col-sm-3 col-form-label">총진료비</label>
 		    <div class="col-sm-9">
-		      <input type="text" class="form-control" id="totalPrice" name="totalPrice" placeholder="0">
+		      <input type="text" class="form-control accpetanceInfo" id="totalPrice" name="totalPrice" placeholder="0">
 		    </div>
 		  </div>
 		  <div class="form-group row">
 		    <label for="copay" class="col-sm-3 col-form-label">본인부담금</label>
 		    <div class="col-sm-9">
-		      <input type="text" class="form-control" id="copay" name="copay" placeholder="0" readonly>
+		      <input type="text" class="form-control accpetanceInfo" id="copay" name="copay" placeholder="0" readonly>
 		    </div>
 		  </div>
 		  <div class="form-group row">
 		    <label for="acceptanceAmount" class="col-sm-3 col-form-label">수납액</label>
 		    <div class="col-sm-9">
-		      <input type="text" class="form-control" id="acceptanceAmount" name="acceptanceAmount" placeholder="0">
+		      <input type="text" class="form-control accpetanceInfo" id="acceptanceAmount" name="acceptanceAmount" placeholder="0"></input>
 		    </div>
 		  </div>
-		  <button type="submit" class="btn btn-primary btn-sm btn-block">수납</button> 
+		  <button type="button" id="acceptanceBtn" class="btn btn-primary btn-sm btn-block">수납</button> 
 		</form>
-		<hr/>
-		<form id="refundForm" method="post" action="/refund/addRefund">
-		  <input type="hidden" id="patientNo" name="patientNo" value="${patient.patientNo}" >
+		<br/>
+		<form id="refundForm">
 		  <div class="form-group row">
 		    <label for="acceptanceNo" class="col-sm-3 col-form-label">수납번호</label>
 		    <div class="col-sm-9">
-		      <input type="text" class="form-control" id="acceptanceNo" name="acceptanceNo" value="${refundAcceptanceNo}" readonly>
+		      <input type="text" class="form-control" id="acceptanceNo" name="acceptanceNo" readonly>
+		    </div>
+		  </div>
+  		  <div class="form-group row">
+		    <label for="possibleAmount" class="col-sm-3 col-form-label">환불가능액</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control" id="possibleAmount" name="possibleAmount" readonly>
 		    </div>
 		  </div>
 		  <div class="form-group row">
 		    <label for="cash" class="col-sm-3 col-form-label">현금</label>
 		    <div class="col-sm-9">
-		      <input type="text" class="form-control" id="cash" name="cash" value="0" placeholder="0">
+		      <input type="text" class="form-control refundInfo" id="cash" name="cash" placeholder="0">
 		    </div>
 		  </div>
 		  <div class="form-group row">
 		    <label for="card" class="col-sm-3 col-form-label">카드</label>
 		    <div class="col-sm-9">
-		      <input type="text" class="form-control" id="card" name="card" value="0" placeholder="0">
+		      <input type="text" class="form-control refundInfo" id="card" name="card" placeholder="0">
 		    </div>
 		  </div>
 		  <div class="form-group row">
 		    <label for="bankTransfer" class="col-sm-3 col-form-label">계좌이체</label>
 		    <div class="col-sm-9">
-		      <input type="text" class="form-control" id="bankTransfer" name="bankTransfer" value="0" placeholder="0">
+		      <input type="text" class="form-control refundInfo" id="bankTransfer" name="bankTransfer" placeholder="0">
 		    </div>
 		  </div>
 		  <div class="form-group row">
 		    <label for="totalRefundAmount" class="col-sm-3 col-form-label">총환불액</label>
 		    <div class="col-sm-9">
+		      <input type="text" class="form-control refundInfo" id="totalRefundAmount" name="totalRefundAmount" placeholder="0" readonly>
+		    </div>
+		  </div>
+		  <button type="button" id="refundBtn" class="btn btn-danger btn-sm btn-block">환불</button> 
+		</form>
+		
+		<form id="cancelForm" class="off">
+		  <div class="form-group row">
+		    <label for="acceptanceNo" class="col-sm-3 col-form-label">수납번호</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control" id="acceptanceNo" name="acceptanceNo" readonly>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="totalRefundAmount" class="col-sm-3 col-form-label">총환불액</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control" id="totalRefundAmount" name="totalRefundAmount" readonly>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="cash" class="col-sm-3 col-form-label">현금</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control cancelInfo" id="cash" name="cash" readonly>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="card" class="col-sm-3 col-form-label">카드</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control cancelInfo" id="card" name="card" readonly>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="bankTransfer" class="col-sm-3 col-form-label">계좌이체</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control cancelInfo" id="bankTransfer" name="bankTransfer" readonly>
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="totalRefundAmount" class="col-sm-3 col-form-label">총환불취소액</label>
+		    <div class="col-sm-9">
 		      <input type="text" class="form-control" id="totalRefundAmount" name="totalRefundAmount" placeholder="0" readonly>
 		    </div>
 		  </div>
-		  <button type="submit" class="btn btn-secondary btn-sm btn-block">환불</button> 
+		  <button type="button" id="cancelBtn" class="btn btn-secondary btn-sm btn-block">환불취소</button> 
 		</form>
 	</div>
 </div>
