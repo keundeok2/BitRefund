@@ -22,12 +22,13 @@ public class RefundServiceImpl implements RefundService {
 	
 	@Override
 	@Transactional
-	public void addRefund(Refund refund) {
+	public int addRefund(Refund refund) {
 		int refundAmount = refund.getTotalRefundAmount();
 		int acceptanceNo = refund.getAcceptanceNo();
 		
-		refundDAO.addRefund(refund);
-		acceptanceDAO.updateRefundAmount(acceptanceNo, refundAmount);
+		int addRefundResult = refundDAO.addRefund(refund);
+		int updateRefundAmountResult = acceptanceDAO.updateRefundAmount(acceptanceNo, refundAmount);
+		return addRefundResult + updateRefundAmountResult;
 	}
 	
 	@Override

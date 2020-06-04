@@ -22,7 +22,6 @@ public class PatientController {
 	@Autowired
 	private PatientService patientService;
 	
-	
 	private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
 
 	@RequestMapping(value = "/getAllPatient", method = RequestMethod.GET)

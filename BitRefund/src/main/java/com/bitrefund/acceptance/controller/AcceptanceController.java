@@ -53,10 +53,8 @@ public class AcceptanceController {
 		logger.info("addAcceptance() run");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		if (success == 1) {
-			map.put("success", true);
+			map.put("success", (success == 1));
 			map.put("acceptance", acceptance);
-		} else map.put("success", false);
 		return map;
 	}
 	

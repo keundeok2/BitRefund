@@ -23,8 +23,6 @@ $(function() {
 	
 	$("tr.info").on("click", function() {
 		var patientNo = $(this).attr("id");
-		//console.log("patientNo", patientNo);
-		//$(location).attr("href", "/acceptance/getAllAcceptanceByPatientNo/"+patientNo);
 		opener.location.href="/acceptance/getAllAcceptanceByPatientNo/"+patientNo;
 		self.close();
 	});
@@ -45,7 +43,7 @@ $(function() {
 			<div class="form-group mb-2">
 				<input type="text" class="form-control" name="searchKeyword">
 			</div>
-			<button type="button" class="btn btn-primary mb-2" id="submit">검색</button>
+			<button type="submit" class="btn btn-primary mb-2" id="submit">검색</button>
 			<button type="button" class="btn btn-secondary mb-2" id="getAllPatient">전체 환자 목록</button>
 		</form>
 	</div>
