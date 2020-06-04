@@ -31,7 +31,7 @@ public class PatientController {
 		logger.info(list.toString());
 		model.addAttribute("list", list);
 		
-		return "index";
+		return "patientList";
 	}
 	
 	@RequestMapping(value = "/getPatientForSearch", method= RequestMethod.POST)
@@ -40,7 +40,7 @@ public class PatientController {
 		
 		List<Patient> list = patientService.getPatientForSearch(search);
 		model.addAttribute("list", list);
-		
-		return "index";
+		model.addAttribute("search", search);
+		return "patientList";
 	}
 }

@@ -36,18 +36,19 @@ $(function() {
 		<form class="form-inline" method="POST" action="/patient/getPatientForSearch">
 			<div class="form-group mb-2">
 				<select	class="form-control" name="searchCondition">
-					<option value="name" selected="selected">이름</option>
-					<option value="socialId">주민번호</option>
+					<option value="name" ${search.searchCondition =='name' ? 'selected' : ''}>이름</option>
+					<option value="socialId" ${search.searchCondition =='socialId' ? 'selected' : ''}>주민번호</option>
+					
 				</select>
 			</div>
 			<div class="form-group mb-2">
-				<input type="text" class="form-control" name="searchKeyword">
+				<input type="text" class="form-control" name="searchKeyword" value="${search.searchKeyword}">
 			</div>
 			<button type="submit" class="btn btn-primary mb-2" id="submit">검색</button>
 			<button type="button" class="btn btn-secondary mb-2" id="getAllPatient">전체 환자 목록</button>
 		</form>
 	</div>
-		<div class="table-responsive col-xs-12 col-sm-10 col-md-10" style="width: 500px;max-height: 300px; overflow-y: scroll;">
+		<div class="table-responsive col-xs-12 col-sm-10 col-md-10" style="width: 500px;max-height: 300px;">
 		<table class="table table-hover table-sm table-bordered">
 			<thead>
 				<tr class="table-primary">
@@ -56,7 +57,7 @@ $(function() {
 					<th scope="col">성별</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody style="overflow-y: scroll;">
 				<c:forEach items="${list}" var="patient">
 					<tr id="${patient.patientNo}" class="info" >
 						<td>${patient.name}</td>
