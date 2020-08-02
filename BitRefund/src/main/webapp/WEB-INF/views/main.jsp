@@ -14,6 +14,49 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="/resources/js/main.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-messaging.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCP7-9lifICjBrXx38qVaYolWTYChiy9nU",
+    authDomain: "webuwl.firebaseapp.com",
+    databaseURL: "https://webuwl.firebaseio.com",
+    projectId: "webuwl",
+    storageBucket: "webuwl.appspot.com",
+    messagingSenderId: "379855395449",
+    appId: "1:379855395449:web:ef47774cfc1627f914d2a8",
+    measurementId: "G-YJ4JNNVF8T"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  const messaging = firebase.messaging();
+  messaging.requestPermission()
+      .then(function() {
+          console.log('Have permission.');
+          return messaging.getToken();
+      })
+      .then(async function(token) {
+         await fetch('/push/register', {
+             method: 'post',
+             body: token
+         })
+         
+      })
+      .catch(function(err) {
+          console.log("Error Occured");
+      })
+  
+  
+	$(function() {
+		$("#sendPush").on("click", function() {
+			fetch("/push/sendMessage", {
+				method : "post"});
+		});
+	});
+</script>
 
 <style type="text/css">
 .off {
@@ -70,6 +113,7 @@
 </div>
 </div>
 	<div class="col-sm-5">
+		<button class="btn btn-block btn-sm btn-info" id="sendPush">알림 전송</button>
 		<button class="btn btn-block btn-sm btn-info" id="patientList">환자검색 / 환자목록</button>
 		<br/>
 		<form id="acceptanceForm">

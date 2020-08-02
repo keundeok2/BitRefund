@@ -7,9 +7,6 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/main/resources/config/dataSource-context.xml</config>
-		<config>src/main/resources/mapper/mybatis-config.xml</config>
-		<config>src/main/resources/config/mybatis-context.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
